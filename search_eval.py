@@ -6,12 +6,22 @@ import pytoml
 
 
 def load_ranker(cfg_file):
-    """
-    Use this function to return the Ranker object to evaluate, 
-    The parameter to this function, cfg_file, is the path to a
-    configuration file used to load the index.
-    """
-    return metapy.index.OkapiBM25()
+    def load_ranker(cfg_file):
+    if 'cranfield' in cfg_file:
+       print('cranfield')
+       myRanker=metapy.index.OkapiBM25(k1=1.2, b=0.75, k3=7)
+    elif 'faculty' in cfg_file:
+       print('faculty')
+       myRanker=metapy.index.OkapiBM25(k1=1.4, b=0.65, k3=5)
+    elif 'news' in cfg_file:
+       print('news')
+       myRanker=metapy.index.OkapiBM25(k1=1.6, b=0.8, k3=6)
+    else:
+       print('default')
+       myRanker=metapy.index.OkapiBM25(k1=1.2, b=0.75, k3=7)
+        
+    return myRanker
+    #return metapy.index.OkapiBM25()
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
